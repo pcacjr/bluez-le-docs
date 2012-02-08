@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\fancyfoot[C] {This document is confidential}
+\fancyfoot[R] {\thepage}
+\fancyhead[C] {BlueZ BTLE How-To}
+\fancyhead[R] {\thepage}
+
+\setlength{\parskip}{10pt}
+
+\title{BlueZ BTLE How-To} \author{João Paulo Rechi Vita \\
+                                  jprvita@openbossa.org}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+This document describes how to test and use Bluetooth Low-Energy on Linux
+systems, using the most recent implementation available at the moment of this
+writing. The instructions are based on a Ubuntu Linux 11.10, since its the most
+widely deployed Linux distribution nowadays. Nonetheless, the process for other
+distributions should be very similar.
+
+\section{Dependencies}
+
+Bellow are listed the libraries and tools needed to compile BlueZ for BTLE
+development. The list uses the packages name on Ubuntu 11.10.
+
+\begin{itemize}
+ \item git
+ \item automake
+ \item byacc
+ \item flex
+ \item libtool
+ \item libdbus-1-dev
+ \item libglib2.0-dev
+ \item libcap-ng-dev
+ \item libusb-dev
+ \item libudev-dev
+ \item libreadline-dev
+\end{itemize}
+
+To install packages on Ubuntu, use \verb|apt-get|, like shown bellow.
+
+\begin{verbatim}
+$ sudo apt-get install <package>
+\end{verbatim}
+
+Make sure you have {\em libreadline-dev} installed, otherwise \verb|gatttoll| is not
+built.
+
+\section{Getting the source code}
+
+\subsection{Linux kernel}
+
+BTLE development is focused on the new Management API, which requires a very
+recent kernel tree. The most up-to-date kernel tree with several LE-specific
+fixes can be found on the {\em integration} branch of the following tree on
+GitHub. Eventually this branch will be integrated on the official kernel trees.
+Don't bother trying to compile other branches, since they have experimental
+changes. To access this code, clone the tree and checkout the branch:
+
+Additionally, one should take special care when doing changes on top of this
+branch, since it's going to be constantly rebased on top of the {\em
+bluetooth-next} kernel tree.
+
+\begin{verbatim}
+$ git clone git://github.com/aguedes/linux.git
+$ cd linux
+$ git checkout integration
+\end{verbatim}
+
+\subsection{Userspace}
+
+The upstream BlueZ tree has all the code necessary for testing and do further
+BTLE development on Linux.
+
+\begin{verbatim}
+$ git clone git://git.kernel.org/pub/scm/bluetooth/bluez.git
+\end{verbatim}
+
+\section{Building and running}
+
+\subsection{Linux kernel}
+
+Now, copy the Linux kernel configuration file from Ubuntu as \verb|.config| to
+the Linux kernel sources directory, and generate a new configuration based on
+the Ubuntu one.
+
+\begin{verbatim}
+$ cd linux
+$ cp /boot/config-`uname -r` .config
+$ make oldconfig
+\end{verbatim}
+
+You should just press Enter for each question until this command returns. Now
+you're ready to compile your kernel. To build and generate a Debian package
+that can be installed on Ubuntu the packages {\em fakeroot} and {\em dpkg-dev}
+are needed.  Make sure they're installed and run:
+
+\begin{verbatim}
+$ make deb-pkg
+\end{verbatim}
+
+Then install the new kernel packages with {\em dpkg}:
+
+\begin{verbatim}
+$ cd ..
+$ sudo dpkg -i linux-image* linux-headers*
+\end{verbatim}
+
+After the installation is complete, reboot to use the new kernel.
+
+\subsection{Userspace}
+
+BlueZ has a script that does the {\em bootstrap} and {\em configure} phases
+with the recommended options for developers. Using it will ease the test and
+development processes and is highly recommended. After downloading the source
+code, run this script to prepare for compilation.
+
+\begin{verbatim}
+$ cd bluez
+$ ./bootstrap-configure
+\end{verbatim}
+
+Due to a bug in Debian (thus Ubuntu) packaging, if you have the {\em check}
+package installed you have to pass the link flag for the correct version of
+{\em libcheck}.
+
+\begin{verbatim}
+CHECK_LIBS="-lcheck_pic" ./bootstrap-configure
+\end{verbatim}
+
+And then build the binaries with {\em make}.
+
+\begin{verbatim}
+$ make
+\end{verbatim}
+
+Now you're ready to run the Bluetooth daemon you've just compiled. First stop
+the one that came with you distro:
+
+\begin{verbatim}
+$ sudo service bluetooth stop
+\end{verbatim}
+
+And the manually start it from the source tree, without forking into a daemon
+(n) and with debug enabled (d).
+
+
+\begin{verbatim}
+$ sudo src/bluetoothd -nd
+\end{verbatim}
+
+\end{document}
