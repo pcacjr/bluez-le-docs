@@ -1,10 +1,10 @@
 all: pdf html
 
-pdf: main.tex
-	pdflatex main.tex && pdflatex main.tex
+pdf: howto.tex
+	pdflatex howto.tex && pdflatex howto.tex
 
-html: main.tex
-	latex2html main.tex
+html: howto.tex
+	latex2html howto.tex
 clean:
 	rm -f *.aux *.log *.pdf *.toc
-	rm -rf main
+	rm -rf howto
