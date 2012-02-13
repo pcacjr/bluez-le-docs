@@ -66,6 +66,16 @@ Currently, the adopted GATT based services runs over Low Energy transport only.
 However, BlueZ architecture supports to run GATT service over both transports:
 BR/EDR and Low Energy.
 
+For BR/EDR GATT PSM 1 is reserved for ATT. For Low Energy the fixed L2CAP
+channel 4 is reserved for ATT protocol.
+
+ATT is a sequential request-response protocol. A client shall not send a
+second request before receiving the response of the first request. In order
+to manage the restrictions imposed by the protocol an abstraction called
+GAttrib has been created allowing to share the same socket between multiple
+services scenario. Roughly, GAttrib is command/response queue shared between
+multiple local GATT profiles(server and/or client).
+
 \subsubsection{Generic Attribute API}
 \subsubsection{Proximity}
 \subsubsection{Thermometer}
