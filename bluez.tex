@@ -35,6 +35,7 @@ This document describes the BlueZ architecture. BlueZ is the official Linux
 Bluetooth protocol stack. It is an Open Source project distributed under GNU
 General Public License (GPL).
 
+
 \section{Overview}
 
 \section{Linux Bluetooth kernel architecture}
@@ -54,6 +55,16 @@ General Public License (GPL).
 \subsubsection{network}
 
 \subsection{Services over GATT}
+
+Generic Attribute Profile(GATT) defines a service framework for discovering
+services, and reading and writing characteristics using Attribute Protocol.
+
+A service is composed by service declaration and characteristic definitions.
+Attribute is the basic element used to describe services and characteristics.
+
+Currently, the adopted GATT based services runs over Low Energy transport only.
+However, BlueZ architecture supports to run GATT service over both transports:
+BR/EDR and Low Energy.
 
 \subsubsection{Generic Attribute API}
 \subsubsection{Proximity}
