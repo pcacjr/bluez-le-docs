@@ -116,6 +116,8 @@ $ make deb-pkg
 
 Then install the new kernel packages with {\em dpkg}:
 
+FIXME: howto load bluetooth module with mgmt enabled
+
 \begin{verbatim}
 $ cd ..
 $ sudo dpkg -i linux-image* linux-headers*
@@ -166,9 +168,27 @@ $ sudo src/bluetoothd -nd
 
 \section{Testing Management Interface}
 
-how to enable mgmt
 describe here how to pair and start discovery using btmgmt
 
+
+\section{Enabling debug}
+
+howto enable kernel debug: dmesg debug level, dynamic debug
+
+\begin{verbatim}
+
+modprobe bluetooth enable_le=1 enable_mgmt=1
+dmesg -n 7
+
+echo "file net/bluetooth/smp.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/mgmt.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/hci_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/hci_event.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/hci_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/hci_conn.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/l2cap_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+echo "file net/bluetooth/l2cap_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+\end{verbatim}
 
 \section{Testing using python scripts}
 
