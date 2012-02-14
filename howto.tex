@@ -221,26 +221,31 @@ org.bluez and then will have access to the methods (available in the
 Interfaces) so that each command will basically call a method of any
 specific Interface to list Bluetooth devices, and so on, for example.
 
+For BlueZ, the device "object" represents the remote Bluetooth device.
+CreateDevice or CreatePairedDevice is the starting point to access
+remote device's services.
+
 There are basically 11 operations that you can perform with test-device script:
 \begin{enumerate}
-  \item List all available Bluetooth devices.
+  \item List all known Bluetooth devices.
     \begin{verbatim}
       $ test-device list
     \end{verbatim}
-  \item List services from a given Bluetooth address.
+  \item List GATT services from a given device.
     \begin{verbatim}
       $ test-device services <Bluetooth address>
     \end{verbatim}
-  \item Create a remote device from a given Bluetooth address.
+  \item Create a remote device from a given Bluetooth address. Triggers the
+	  SDP or discover all primary services.
     \begin{verbatim}
       $ test-device create <Bluetooth address>
     \end{verbatim}
-  \item Remove a device from either a Bluetooth addres or a path in
+  \item Remove a device from either a Bluetooth address or a path in
         D-Bus's object path form.
     \begin{verbatim}
       $ test-device remove <Bluetooth address or Service object path>
     \end{verbatim}
-  \item Disconnect a device from a given Bluetooth address.
+  \item Disconnect a remote device.
     \begin{verbatim}
       $ test-device disconnect <Bluetooth address>
     \end{verbatim}
@@ -248,7 +253,8 @@ There are basically 11 operations that you can perform with test-device script:
         optional pattern string. If this option argument is the string
         ``yes'', for example, then the DiscoverDevices() method of the
         org.bluez.Device interface will be called and find presumably
-        the device that matches this pattern.
+        the device that matches this pattern. Method used to update the
+	service list using SDP or discover all primary services.
     \begin{verbatim}
       $ test-device discover <Bluetooth address> [pattern]
     \end{verbatim}
