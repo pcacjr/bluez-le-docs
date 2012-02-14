@@ -269,6 +269,35 @@ There are basically 11 operations that you can perform with test-device script:
     \end{verbatim}
 \end{enumerate}
 
+The test-attrib is a Python script for testing purposes only and which is part
+of the BlueZ toolchain. This script will basically test the Attribute
+D-Bus API with Bluetooth LE devices.
+
+There are basically 4 operations that you can perform with test-attrib
+script:
+\begin{enumerate}
+   \item For each Bluetooth LE device, return its address, as well for
+     each service of such Bluetooth LE device, and then return the service
+     object path, UUID, and all characteristics of it, respectively.
+     \begin{verbatim}
+       $ test-attrib list
+     \end{verbatim}
+   \item Return all services from a given Bluetooth address.
+     \begin{verbatim}
+       $ test-attrib services <Bluetooth address>
+     \end{verbatim}
+   \item Return all discovery characteristics of the Bluetooth LE device
+     from a given service object path.
+     \begin{verbatim}
+       $ test-attrib discover <Service object path>
+     \end{verbatim}
+   \item Return all properties from every characteristic of the Bluetooth
+     LE Device.
+     \begin{verbatim}
+       $ test-attrib chars <Service object path>
+     \end{verbatim}
+\end{enumerate}
+
 describe here test-device, test-attrib, test-adapter and simple-agent
 
 \section{Supporting tools}
