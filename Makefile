@@ -10,4 +10,4 @@ html: howto.tex
 
 clean:
 	rm -f *.aux *.log *.pdf *.toc
-	rm -rf howto
+	rm -rf howto bluez
