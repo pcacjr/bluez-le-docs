@@ -15,7 +15,10 @@
 \setlength{\parskip}{10pt}
 
 \title{BlueZ BTLE How-To} \author{João Paulo Rechi Vita \\
-                                  jprvita@openbossa.org}
+                                  jprvita@openbossa.org
+                          \and
+                          Paulo Alcantara \\
+                          pcacjr@gmail.com}
 
 \begin{document}
 
@@ -190,7 +193,82 @@ echo "file net/bluetooth/l2cap_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/c
 echo "file net/bluetooth/l2cap_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
 \end{verbatim}
 
-\section{Testing using python scripts}
+\section{Testing using Python scripts}
+
+The test-device is a Python script for testing purposes only and which is part
+of the BlueZ toolchain. Through the D-Bus API in Python, the script
+will be able to gain access to the D-Bus's system service called
+org.bluez and then will have access to the methods (available in the
+Interfaces) so that each command will basically call a method of any
+specific Interface to list Bluetooth devices, and so on, for example.
+
+There are basically 11 operations that you can perform with test-device script:
+\begin{enumerate}
+  \item List all available Bluetooth devices.
+    \begin{verbatim}
+      $ test-device list
+    \end{verbatim}
+  \item List services from a given Bluetooth address.
+    \begin{verbatim}
+      $ test-device services <Bluetooth address>
+    \end{verbatim}
+  \item Create a remote device from a given Bluetooth address.
+    \begin{verbatim}
+      $ test-device create <Bluetooth address>
+    \end{verbatim}
+  \item Remove a device from either a Bluetooth addres or a path in
+        D-Bus's object path form.
+    \begin{verbatim}
+      $ test-device remove <Bluetooth address or Service object path>
+    \end{verbatim}
+  \item Disconnect a device from a given Bluetooth address.
+    \begin{verbatim}
+      $ test-device disconnect <Bluetooth address>
+    \end{verbatim}
+  \item Discover a device from a given Bluetooth address and also an
+        optional pattern string. If this option argument is the string
+        ``yes'', for example, then the DiscoverDevices() method of the
+        org.bluez.Device interface will be called and find presumably
+        the device that matches this pattern.
+    \begin{verbatim}
+      $ test-device discover <Bluetooth address> [pattern]
+    \end{verbatim}
+  \item Return the device class (retrieved from
+        org.bluez.Device.GetProperties() method which returns all the
+        properties of the attached Bluetooth adapter) from a given
+        Bluetooth address.
+    \begin{verbatim}
+      $ test-device class <Bluetooth address>
+    \end{verbatim}
+  \item Return the device name (retrieved from
+        org.bluez.Device.GetProperties() method which returs all the
+        properties of the attached Bluetooth adapter) from a given
+        Bluetooth address.
+    \begin{verbatim}
+      $ test-device name <Bluetooth address>
+    \end{verbatim}
+  \item Return the alias name (retrieved from
+        org.bluez.Device.GetProperties() method which returns all the
+        properties of the attached Bluetooth adapter) from a given
+        Bluetooth address.
+    \begin{verbatim}
+      $ test-device alias <Bluetooth address> [alias]
+    \end{verbatim}
+  \item Set the value of the property named ``Trusted'' by passing as
+        third argument either the values ``yes'' or ``no''
+        (this command also requires an address to be passed as second
+         argument).
+    \begin{verbatim}
+      $ test-device trusted <Bluetooth addres> [yes/no]
+    \end{verbatim}
+  \item Set the value of the property named ``Blocked'' by passing as
+        third argument either the values ``yes'' or ``no''
+        (this command also requires an address to be passed as second
+         argument).
+    \begin{verbatim}
+      $ test-device blocked <Bluetooth address> [yes/no]
+    \end{verbatim}
+\end{enumerate}
 
 describe here test-device, test-attrib, test-adapter and simple-agent
 
