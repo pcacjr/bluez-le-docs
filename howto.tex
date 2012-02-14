@@ -170,6 +170,23 @@ $ sudo src/bluetoothd -nd
 
 \section{Testing Management Interface}
 
+Bluetooth Management Interface is a replacement for the traditional HCI
+interface, it is a new kernel/userspace API. It aims to move some core host
+features to the kernel hiding from the userspace some hardware/controller
+specific features. It will NOT be a 1 to 1 HCI command mapping, the idea is
+to group a set o HCI commands in one management command.
+
+Management Interface usage is transparent to the userspace. BlueZ supports
+an abstraction to hide from the user the active interface.
+
+\begin{verbatim}
+'Y' if Management Interface is enabled
+cat /sys/module/bluetooth/parameters/enable_mgmt
+
+'Y' if Bluetooth Low Energy is enabled
+cat /sys/module/bluetooth/parameters/enable_le
+\end{verbatim}
+
 describe here how to pair and start discovery using btmgmt
 
 
