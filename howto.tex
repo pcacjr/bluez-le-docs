@@ -348,7 +348,68 @@ script:
      \end{verbatim}
 \end{enumerate}
 
-describe here test-device, test-attrib, test-adapter and simple-agent
+The test-adapter is a Python script for testing purposes only and which is part
+of the BlueZ toolchain. This script will basically make use of the
+Adapter D-Bus API that contains all methods needed to handle Bluetooth LE
+adapters.
+
+There are basically 9 operations that you can perform with
+test-adapter script:
+\begin{enumerate}
+  \item Retrieve Bluetooth adapter's address.
+    \begin{verbatim}
+      $ test-adapter address
+    \end{verbatim}
+  \item List all available Bluetooth adapters, as well as their object
+        path, and pair of key and value for all their properties.
+    \begin{verbatim}
+      $ test-adapter list
+    \end{verbatim}
+  \item Retrieve Bluetooth adapter's name (if no argument specified),
+        otherwise set the property named ``Name'' to the value passed
+        as argument. Once it's got its new name set, all other
+        Bluetooth devices will see this new name when looking for
+        Bluetooth devices to pair with.
+    \begin{verbatim}
+      $ test-adapter name [name]
+    \end{verbatim}
+  \item Set the property named ``Powered'' to the value passed as
+        argument (if any), otherwise return the value that was
+        previously set in it.
+    \begin{verbatim}
+      $ test-adapter powered [on/off]
+    \end{verbatim}
+  \item Set the property named ``Pairable'' to the value passed as
+        argument (if any), otherwise return the value that was
+        previously set in it.
+    \begin{verbatim}
+      $ test-adapter pairable [on/off]
+    \end{verbatim}
+  \item Set the property named ``PairableTimeout'' to the value passed
+        as argument (if any), otherwise return the value that was
+        previously set in it. Note also that the value passed as
+        argument must be an unsigned integer.
+    \begin{verbatim}
+      $ test-adapter pairabletimeout [timeout]
+    \end{verbatim}
+  \item Set the property named ``Discoverable'' to the value passed as
+        argument (if any), otherwise return the value that was
+        previously set in it.
+    \begin{verbatim}
+      $ test-adapter discoverable [on/off]
+    \end{verbatim}
+  \item Set the property named ``DiscoverableTimeout'' to the value
+        passed as argument (if any), otherwise return the value that
+        was previously set in it. Note also that the value passed as
+        argument must be an unsigned integer.
+    \begin{verbatim}
+      $ test-adapter discoverabletimeout [timeout]
+    \end{verbatim}
+  \item Return the current value of the property named ``Discovering''.
+    \begin{verbatim}
+      $ test-adapter discovering
+    \end{verbatim}
+\end{enumerate}
 
 \section{Supporting tools}
 
