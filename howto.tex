@@ -200,20 +200,41 @@ describe here how to pair and start discovery using btmgmt
 
 howto enable kernel debug: dmesg debug level, dynamic debug
 
-\begin{verbatim}
+\subsection{Enabling kernel debug}
 
-modprobe bluetooth enable_le=1 enable_mgmt=1
-dmesg -n 7
+debugfs is a virtual file system that allows developers use to put debugging files into.
 
-echo "file net/bluetooth/smp.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/mgmt.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/hci_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/hci_event.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/hci_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/hci_conn.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/l2cap_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-echo "file net/bluetooth/l2cap_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
-\end{verbatim}
+\begin{enumerate}
+	\item Check if dynamic debug and debug FS are enabled in the kernel settings(.config):
+
+	\begin{verbatim}
+		CONFIG_DEBUG_FS=y
+		CONFIG_DYNAMIC_DEBUG=y
+	\end{verbatim}
+
+	\item Tracking bluetooth files logs
+
+	\begin{verbatim}
+	Dynamic debugging is controlled via the "dynamic_debug/control" file.
+	Add the bluetooth files that you wanna track the dynamic printk
+	messages in the control file.
+
+		$ echo "file net/bluetooth/smp.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/mgmt.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/hci_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/hci_event.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/hci_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/hci_conn.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/l2cap_sock.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+		$ echo "file net/bluetooth/l2cap_core.c +pf\" >> /sys/kernel/debug/dynamic_debug/control
+	\end{verbatim}
+
+	\item Setting level of messages printed to console
+
+		\begin{verbatim}
+		$ sudo dmesg --console-level debug
+		\end{verbatim}
+\end{enumerate}
 
 \section{Testing using Python scripts}
 
