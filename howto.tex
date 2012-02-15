@@ -411,6 +411,25 @@ test-adapter script:
     \end{verbatim}
 \end{enumerate}
 
+The simple-agent is a Python script for testing purposes only and which is part
+of the BlueZ toolchain. This script is used for when pairing Bluetooth
+LE devices. If you want to pair with a Bluetooth LE device without using the
+gnome-bluez package, for example, then this is right tool for that.
+
+Just type this command on a console:
+\begin{verbatim}
+  $ simple-agent
+\end{verbatim}
+
+If it all works, you should get the message ``Agent registered'' on
+that console. You can now pairing from your device, and the
+script will ask you for the passcode on this console, you type it and
+confirm with enter, that's all. You can now also shut down the agent
+using the key sequences Ctrl + c (that sends a SIGINT signal from
+the console to the running program itself).
+
+Note: you need it only for pairing, not every time you want to connect.
+
 \section{Supporting tools}
 
 explain here l2test, gatttool, hcidump
