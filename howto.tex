@@ -122,14 +122,24 @@ $ make deb-pkg
 
 Then install the new kernel packages with {\em dpkg}:
 
-FIXME: howto load bluetooth module with mgmt enabled
-
 \begin{verbatim}
 $ cd ..
 $ sudo dpkg -i linux-image* linux-headers*
 \end{verbatim}
 
-After the installation is complete, reboot to use the new kernel.
+After the installation is complete, reboot to use the new kernel. To enable the
+new MGMT interface a parameter should passed to the bluetooth kernel module.
+Another paramenter is also needed to enable LE discovery.  After unloading all
+bluetooth adapters ({\em hci0} to {\em hciN}) and bluetooth kernel modules, the
+{\em bluetooth} module should be reloaded with {\em enable\_mgmt=1} and {\em
+enable\_le=1} (make sure substitute {\em hciX} with the name of the adapter,
+for all bluetooth adapters on the system).
+
+\begin{verbatim}
+$ sudo hciconfig hciX down
+$ sudo rmmod rfcomm bnep btusb bluetooth
+$ sudo modprobe bluetooth enable_mgmt=1 enable_le=1
+\end{verbatim}
 
 \subsection{Userspace}
 
