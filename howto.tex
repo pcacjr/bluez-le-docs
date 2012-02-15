@@ -247,7 +247,13 @@ specific Interface to list Bluetooth devices, and so on, for example.
 
 For BlueZ, the device "object" represents the remote Bluetooth device.
 CreateDevice or CreatePairedDevice is the starting point to access
-remote device's services.
+remote device's services. Bluetooth Low Energy support in BlueZ aligns
+BR/EDR and Low Energy, device discovery and device \"create\" operations
+share the same API.
+
+\subsection{Discovering Devices}
+
+\subsection{Managing Devices}
 
 There are basically 11 operations that you can perform with test-device script:
 \begin{enumerate}
@@ -324,6 +330,8 @@ of the BlueZ toolchain. Basically, this script test the Generic Attribute
 D-Bus API. Before using test-attrib the "device" needs to be created using
 test-device, simple-agent or any other client.
 
+\subsection{Generic Attribute API}
+
 There are basically 4 operations that you can perform with test-attrib
 script:
 \begin{enumerate}
@@ -348,6 +356,7 @@ script:
      \end{verbatim}
 \end{enumerate}
 
+\subsection{Managing local Bluetooth adapter}
 The test-adapter is a Python script for testing purposes only and which is part
 of the BlueZ toolchain. This script will basically make use of the
 Adapter D-Bus API that contains all methods needed to handle Bluetooth LE
