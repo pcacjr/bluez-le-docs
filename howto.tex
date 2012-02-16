@@ -188,11 +188,11 @@ features to the kernel hiding from the userspace some hardware/controller
 specific features. It will NOT be a 1 to 1 HCI command mapping, the idea is
 to group a set o HCI commands in one management command.
 
-Management Interface usage is transparent to the userspace. BlueZ supports
-an abstraction to hide from the user the active interface(aka adapter ops
-plugin). There is one plugin for management(with higher priority) and another
-plugin for HCI, if Management Interface is not enabled in the Kernel, the
-fallback is the HCI plugin.
+Management Interface usage is transparent to the userspace. BlueZ supports an
+abstraction to hide from the user the active interface (also known as {\em
+adapter\_ops} plugin). There is one plugin for management (with higher priority)
+and another plugin for HCI, if Management Interface is not enabled in the
+Kernel, the fallback is the HCI plugin.
 
 To check if MGMT interface and LE discovery are enabled, the following commands
 should return a \verb|Y|.
@@ -217,7 +217,7 @@ howto enable kernel debug: dmesg debug level, dynamic debug
 debugfs is a virtual file system that allows developers use to put debugging files into.
 
 \begin{enumerate}
-	\item Check if dynamic debug and debug FS are enabled in the kernel settings(.config):
+	\item Check if dynamic debug and debug FS are enabled in the kernel settings (.config):
 
 	\begin{verbatim}
 		CONFIG_DEBUG_FS=y
@@ -250,17 +250,17 @@ debugfs is a virtual file system that allows developers use to put debugging fil
 
 \section{Testing using Python scripts}
 
-BlueZ(bluetoothd) exposes a D-Bus API to allow the applications to configure
-Bluetooth adapters, manage discovery, {\em create} device and interact with
+BlueZ (bluetoothd) exposes a D-Bus API to allow the applications to configure
+Bluetooth adapters, manage discovery, {\em create} devices and interact with
 services.
 
-D-Bus(http://http://dbus.freedesktop.org/) is widely used in Linux
+D-Bus \footnote{http://dbus.freedesktop.org/} is widely used in Linux
 distributions as interprocess communication mechanism. Python offers
 language bindings for D-Bus, exposing a simple syntax to create 
 {\em proxy objects} to interact with remote applications.
 
 For BlueZ, the device {\em object} represents the remote Bluetooth device.
-CreateDevice or CreatePairedDevice is the starting point to access
+{\em CreateDevice} or {\em CreatePairedDevice} is the starting point to access
 remote device's services. Bluetooth Low Energy support in BlueZ aligns
 BR/EDR and Low Energy, device discovery and device {\em create} operations
 share the same API.
@@ -270,7 +270,7 @@ share the same API.
 Interleaved discovery can be executed through management interface or the
 standard HCI interface. The difference is where the code is implemented:
 for Management, the discovery is in the kernel instead of userspace
-plugin(HCI adapter ops plugin).
+plugin (HCI {\em adapter\_ops} plugin).
 
 When running with Management Interface, {\em enable\_le} module parameter
 needs to be enabled to execute interleaved discovery, otherwise only
