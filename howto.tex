@@ -245,10 +245,10 @@ org.bluez and then will have access to the methods (available in the
 Interfaces) so that each command will basically call a method of any
 specific Interface to list Bluetooth devices, and so on, for example.
 
-For BlueZ, the device "object" represents the remote Bluetooth device.
+For BlueZ, the device {\em object} represents the remote Bluetooth device.
 CreateDevice or CreatePairedDevice is the starting point to access
 remote device's services. Bluetooth Low Energy support in BlueZ aligns
-BR/EDR and Low Energy, device discovery and device \"create\" operations
+BR/EDR and Low Energy, device discovery and device {\em create} operations
 share the same API.
 
 \subsection{Discovering Devices}
@@ -277,11 +277,11 @@ If you wanna pair with a given device only:
   $ simple-agent hciX <Bluetooth Address>
 \end{verbatim}
 
--c or --capability option can be used to change the default(\"KeyboardDisplay\")
-value. Other possible values are: \"DisplayOnly\", \"DisplayYesNo\",
-\"KeyboardOnly\", \"NoInputNoOutput\"
+-c or --capability option can be used to change the default {\em
+KeyboardDisplay} value. Other possible values are: {\em DisplayOnly}, {\em
+DisplayYesNo} {\em KeyboardOnly}, {\em NoInputNoOutput}
 
-After \"creating\" a new device, test-device script can be used to interact
+After {\em creating}a new device, test-device script can be used to interact
 with the remote device.
 
 There are basically 11 operations that you can perform with test-device script:
@@ -356,7 +356,7 @@ There are basically 11 operations that you can perform with test-device script:
 
 The test-attrib is a Python script for testing purposes only and which is part
 of the BlueZ toolchain. Basically, this script test the Generic Attribute
-D-Bus API. Before using test-attrib the "device" needs to be created using
+D-Bus API. Before using test-attrib the remote device needs to be paired using
 test-device, simple-agent or any other client.
 
 \subsection{Generic Attribute API}
