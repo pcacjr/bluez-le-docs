@@ -502,6 +502,20 @@ test-adapter script:
 
 \section{Supporting tools}
 
+\subsection{Dump raw HCI data}
+
+The hcidump is a tool which is part of the BlueZ toolchain. It's the
+BlueZ project Bluetooth HCI data dumper which lets you view raw HCI
+data to and from a Bluetooth device in a human readable way.
+
+Start hcidump like this and create a Bluetooth connection to your
+device:
+\begin{verbatim}
+  $ hcidump -V -x
+\end{verbatim}
+
+You will see a lot of verbose messages of the data and state of the connection.
+
 explain here l2test, gatttool, hcidump
 
 \end{document}
