@@ -247,12 +247,14 @@ debugfs is a virtual file system that allows developers use to put debugging fil
 
 \section{Testing using Python scripts}
 
-The test-device is a Python script for testing purposes only and which is part
-of the BlueZ toolchain. Through the D-Bus API in Python, the script
-will be able to gain access to the D-Bus's system service called
-org.bluez and then will have access to the methods (available in the
-Interfaces) so that each command will basically call a method of any
-specific Interface to list Bluetooth devices, and so on, for example.
+BlueZ(bluetoothd) exposes a D-Bus API to allow the applications to configure
+Bluetooth adapters, manage discovery, {\em create} device and interact with
+services.
+
+D-Bus(http://http://dbus.freedesktop.org/) is widely used in Linux
+distributions as interprocess communication mechanism. Python offers
+language bindings for D-Bus, exposing a simple syntax to create 
+{\em proxy objects} to interact with remote applications.
 
 For BlueZ, the device {\em object} represents the remote Bluetooth device.
 CreateDevice or CreatePairedDevice is the starting point to access
