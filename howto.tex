@@ -189,7 +189,10 @@ specific features. It will NOT be a 1 to 1 HCI command mapping, the idea is
 to group a set o HCI commands in one management command.
 
 Management Interface usage is transparent to the userspace. BlueZ supports
-an abstraction to hide from the user the active interface.
+an abstraction to hide from the user the active interface(aka adapter ops
+plugin). There is one plugin for management(with higher priority) and another
+plugin for HCI, if Management Interface is not enabled in the Kernel, the
+fallback is the HCI plugin.
 
 To check if MGMT interface and LE discovery are enabled, the following commands
 should return a \verb|Y|.
@@ -263,6 +266,43 @@ BR/EDR and Low Energy, device discovery and device {\em create} operations
 share the same API.
 
 \subsection{Discovering Devices}
+
+Interleaved discovery can be executed through management interface or the
+standard HCI interface. The difference is where the code is implemented:
+for Management, the discovery is in the kernel instead of userspace
+plugin(HCI adapter ops plugin).
+
+When running with Management Interface, {\em enable\_le} module parameter
+needs to be enabled to execute interleaved discovery, otherwise only
+inquiry will be executed.
+
+Start Discovery command in Management Interface has a bit-wise parameter to
+inform which remote address type is expected. At the moment, interleaved
+discovery is the default method hard-coded in bluetoothd when Management
+Interface is in use. btmgmt tool can be used instead to test discovery
+with address type filter. The following values are allowed:
+
+\begin{verbatim}
+	1   BR/EDR
+	6   LE (public & random)
+	7   BR/EDR/LE (interleaved discovery)
+\end{verbatim}
+
+Testing discovery through D-Bus:
+\begin{verbatim}
+	$ ./test-discovery
+\end{verbatim}
+
+Testing discovery directly through Management socket:
+\begin{verbatim}
+	Finding Low Energy Devices: Public and Random Addresses:
+	$ ./btmgmt find -l
+
+	Finding BR/EDR devices:
+	$ ./btmgmt find -b
+\end{verbatim}
+Default is interleaved discovery: 5.12s of LE scanning followed by 5.12s
+of inquiry.
 
 \subsection{Managing Devices}
 
