@@ -195,14 +195,17 @@ to group a set o HCI commands in one management command.
 Management Interface usage is transparent to the userspace. BlueZ supports
 an abstraction to hide from the user the active interface.
 
-\begin{verbatim}
-'Y' if Management Interface is enabled
-cat /sys/module/bluetooth/parameters/enable_mgmt
+To check if MGMT interface and LE discovery are enabled, the following commands
+should return a \verb|Y|.
 
-'Y' if Bluetooth Low Energy is enabled
-cat /sys/module/bluetooth/parameters/enable_le
+\begin{verbatim}
+$ cat /sys/module/bluetooth/parameters/enable_mgmt
+Y
+$ cat /sys/module/bluetooth/parameters/enable_le
+Y
 \end{verbatim}
 
+\subsection{btmgmt}
 describe here how to pair and start discovery using btmgmt
 
 
